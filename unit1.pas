@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   ActnList, StdActns, Menus, Buttons, uPSComponent, SynEdit, SynHighlighterPas,
-  SynEditTypes, SynEditMarkupSpecialLine, uPSUtils, SynGutterBase, SynEditMarks,
+  SynEditTypes, uPSUtils, SynEditMarks,
   SynCompletion;
 
 type
@@ -44,7 +44,8 @@ type
     ImageList2: TImageList;
     lblCaretPosition: TLabel;
     MainMenu1: TMainMenu;
-    memoMessages: TMemo;
+    moWatches: TMemo;
+    moMessages: TMemo;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -81,6 +82,7 @@ type
     MenuItem9: TMenuItem;
     Panel1: TPanel;
     Panel2: TPanel;
+    pnlMessages: TPanel;
     pnlSearchTools: TPanel;
     pnlToolbar: TPanel;
     pnlBott: TPanel;
@@ -99,6 +101,7 @@ type
     SpeedButton9: TSpeedButton;
     Splitter1: TSplitter;
     Editor: TSynEdit;
+    Splitter2: TSplitter;
     SynPasSyn1: TSynPasSyn;
     procedure actBreakpointExecute(Sender: TObject);
     procedure actCompileExecute(Sender: TObject);
@@ -121,8 +124,7 @@ type
       Shift: TShiftState);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormShow(Sender: TObject);
-    procedure memoMessagesDblClick(Sender: TObject);
-    procedure pnlMenuToolsClick(Sender: TObject);
+    procedure moMessagesDblClick(Sender: TObject);
     procedure ScriptAfterExecute(Sender: TPSScript);
     procedure ScriptBreakpoint(Sender: TObject; const FileName: tbtstring;
       Posit_, Row, Col: Cardinal);
@@ -140,6 +142,7 @@ type
   private
     FCompiled: Boolean;
     FFileName: String;
+    FStepping: Boolean;
     FIdling: Boolean;
     FExecuting: Boolean;
     FInfoRow: Cardinal;
@@ -158,6 +161,8 @@ type
     procedure ToggleBreakpoint(Line: LongInt);
     function GetErrorLine(AMess: String): TPoint;
     procedure ClearAllBookmarks;
+    procedure UpdateWatches;
+    procedure ResetScript;
   public
 
     property FileName: String read FFileName write SetFileName;
@@ -176,15 +181,43 @@ uses
 
 resourcestring
   rsNoname = 'Noname';
+  rsWatch = 'Watch';
+  rsVariable = 'Variable';
+  rsRunning = ' (running) ';
+  rsPaused = ' (paused) ';
+  rsLineDColDS = 'Line: %d, Col: %d (%s)';
+  rsINS = 'INS';
+  rsOVR = 'OVR';
+  rsSuccessfulyCompiled = '%sSuccessfuly compiled.';
+  rsCompilationFailed = '%sCompilation failed.';
+  rsSuccessfulyExecuted = 'Successfuly executed.';
+  rsRuntimeErrorSDDBytecodeDDS = '[Runtime error] %s(%d:%d), bytecode(%d:%d): '
+    +'%s';
+  rsSourceModified = 'Source modified. Do you want to save changes?';
+  rsSave = 'Save';
+  rsDiscardChanges = 'Discard changes';
+  rsCancel = 'Cancel';
+  rsProgramIsRunningDoYouWantToStopIt = 'Program is running. Do you want to '
+    +'stop it?';
+  rsStopIt = 'Stop it';
 
 const
+  // Identifier characters
   ID_FIRST = ['A'..'Z', 'a'..'z', '_'];
   ID_SYMBOL = ID_FIRST + ['0'..'9'];
   ID_DELIMITERS = [#9..#127] - ID_SYMBOL;
 
+  // Special line colors
+  FG_ACTIVE = clWhite;
+  BG_ACTIVE = clBlue;
+  FG_BKPT = clWhite;
+  BG_BKPT = clRed;
+  FG_ACTIVE_ON_BKPT = clRed;
+  BG_ACTIVE_ON_BKPT = clWhite;
+
 procedure MyWriteLn(const S: String);
 begin
-  Form1.memoMessages.Lines.Add(S);
+  Form1.moMessages.Lines.Add(S);
 end;
 
 function MyReadLn(const Question: String): String;
@@ -237,8 +270,7 @@ begin
         end;
       end;
   end;
-
-  Form1.memoMessages.Lines.Add(S);
+  Form1.moMessages.Lines.Add(S);
 end;
 
 procedure MyVariantWriteLn(V: Variant);
@@ -374,9 +406,24 @@ begin
   for I in [0..9] do Editor.ClearBookMark(I);
 end;
 
-procedure TForm1.actOpenAccept(Sender: TObject);
+procedure TForm1.UpdateWatches;
 var
+  SID, Cont: String;
   I: Integer;
+begin
+  for I := 0 to Pred(moWatches.Lines.Count) do
+  begin
+    SID := Trim(ExtractWord(1, moWatches.Lines[I], ID_DELIMITERS));
+    if (SID = '') or not (SID[1] in ID_FIRST) then
+      Continue;
+    if FExecuting then
+      Cont := Script.GetVarContents(SID) else
+      Cont := '(not running)';
+    moWatches.Lines[I] := SID + ' = ' + Cont;
+  end;
+end;
+
+procedure TForm1.actOpenAccept(Sender: TObject);
 begin
   Editor.Lines.LoadFromFile(actOpen.Dialog.FileName);
   FileName := actOpen.Dialog.FileName;
@@ -435,7 +482,7 @@ var
 begin
   S := Trim(Editor.SelText);
   if S = '' then
-    S := Trim(InputBox('Watch', 'Variable', ''));
+    S := Trim(InputBox(rsWatch, rsVariable, ''));
   if S = '' then
     Exit;
   for I := 1 to 10 do
@@ -446,7 +493,7 @@ begin
     if not (SID[1] in ID_FIRST) then
       Continue;
     Cont := Script.GetVarContents(SID);
-    memoMessages.Lines.Add(SID + ' = ' + Cont);
+    moWatches.Lines.Add(SID + ' = ' + Cont);
   end;
 end;
 
@@ -468,23 +515,24 @@ begin
   UpdateActs;
 end;
 
-procedure TForm1.memoMessagesDblClick(Sender: TObject);
+procedure TForm1.moMessagesDblClick(Sender: TObject);
 begin
-  Editor.CaretXY := GetErrorLine(memoMessages.Lines[memoMessages.CaretPos.Y]);
+  Editor.CaretXY := GetErrorLine(moMessages.Lines[moMessages.CaretPos.Y]);
   Editor.SetFocus;
 end;
 
-procedure TForm1.pnlMenuToolsClick(Sender: TObject);
+procedure TForm1.ScriptAfterExecute(Sender: TPSScript);
 begin
-
+  ResetScript;
 end;
 
-procedure TForm1.ScriptAfterExecute(Sender: TPSScript);
+procedure TForm1.ResetScript;
 begin
   FActiveLine := 0;
   Editor.Refresh;
   FExecuting := False;
   FIdling := False;
+  UpdateWatches;
   UpdateTitle;
   UpdateActs;
 end;
@@ -523,6 +571,11 @@ begin
     CaretPos(FActiveLine, 1);
     Editor.Refresh;
   end;
+  if FStepping then
+  begin
+    FStepping := False;
+    UpdateWatches;
+  end;
   Application.ProcessMessages;
   if FResume then
   begin
@@ -538,16 +591,14 @@ end;
 
 procedure TForm1.ScriptLine(Sender: TObject);
 begin
-  ;
+  FStepping := True;
 end;
 
 procedure TForm1.ScriptLineInfo(Sender: TObject;
   const FileName: tbtstring; Posit, Row, Col: Cardinal);
 begin
   FInfoRow := Row;
-  if (Script.Exec.DebugMode <> dmRun) and
-    (Script.Exec.DebugMode <> dmStepOver)
-  then
+  if not (Script.Exec.DebugMode in [dmRun, dmStepOver]) then
   begin
     FActiveLine := Row;
     CaretPos(FActiveLine, 1);
@@ -571,19 +622,19 @@ begin
     Special := True;
     if Line = FActiveLine then
     begin
-      BG := clWhite;
-      FG := clRed;
+      FG := FG_ACTIVE_ON_BKPT;
+      BG := BG_ACTIVE_ON_BKPT;
     end else
     begin
-      FG := clWhite;
-      BG := clRed;
+      FG := FG_BKPT;
+      BG := BG_BKPT;
     end;
   end
   else if Line = FActiveLine then
   begin
     Special := True;
-    FG := clWhite;
-    bg := clBlue;
+    FG := FG_ACTIVE; // clWhite;
+    BG := BG_ACTIVE; // clBlue;
   end
   else
     Special := False;
@@ -601,15 +652,14 @@ begin
   end;
 end;
 
-
 procedure TForm1.UpdateTitle;
 begin
   Caption :=
     Application.Title + ' | ' +
     IfThen(Editor.Modified, '*') +
     IfThen(FileName <> '', FileName, rsNoname) +
-    IfThen(FExecuting, ' (running) ') +
-    IfThen(FIdling, ' (paused) ')
+    IfThen(FExecuting, rsRunning) +
+    IfThen(FIdling, rsPaused)
     ;
 end;
 
@@ -624,8 +674,8 @@ end;
 
 procedure TForm1.UpdateStatus;
 begin
-  lblCaretPosition.Caption := Format('Line: %d, Col: %d (%s)', [Editor.CaretY,
-    Editor.CaretX, IfThen(Editor.InsertMode, 'INS', 'OVR')]);
+  lblCaretPosition.Caption := Format(rsLineDColDS, [Editor.CaretY,
+    Editor.CaretX, IfThen(Editor.InsertMode, rsINS, rsOVR)]);
 end;
 
 function TForm1.Compile: Boolean;
@@ -639,9 +689,9 @@ begin
   for I := 0 to Pred(Script.CompilerMessageCount) do
     Msgs := Msgs + Script.CompilerMessages[I].MessageToString + LineEnding;
   if FCompiled then
-    Msgs := Msgs + 'Successfuly compiled.' else
-    Msgs := Msgs + 'Compilation failed.';
-  memoMessages.Text := Msgs;
+    Msgs := Format(rsSuccessfulyCompiled, [Msgs]) else
+    Msgs := Format(rsCompilationFailed, [Msgs]);
+  moMessages.Text := Msgs;
 
   if FCompiled then
   begin
@@ -656,18 +706,18 @@ begin
   //debugoutput.Output.Clear;
   if Script.Execute then
   begin
-    memoMessages.Lines.Add('Successfuly executed.');
+    moMessages.Lines.Add(rsSuccessfulyExecuted);
     Result := True;
   end
   else
   begin
-    memoMessages.Lines.Add(Format('[Runtime error] %s(%d:%d), bytecode(%d:%d): %s',
+    Script.Stop; // isPaused
+    moMessages.Lines.Add(Format(rsRuntimeErrorSDDBytecodeDDS,
       [ExtractFileName(FileName), Script.ExecErrorRow,
       Script.ExecErrorCol, Script.ExecErrorProcNo,
       Script.ExecErrorByteCodePosition, Script.ExecErrorToString]));
     Result := False;
   end;
-
 end;
 
 function TForm1.CheckSaved: Boolean;
@@ -676,9 +726,9 @@ var
 begin
   Result := True;
   if Editor.Modified then
-    case QuestionDlg('', 'Source modified. Do you want to save changes?',
-      mtWarning, [mrYes, 'Save', 'isdefault', mrNo, 'Discard changes',
-      mrCancel, 'Cancel'], 0)
+    case QuestionDlg('', rsSourceModified,
+      mtWarning, [mrYes, rsSave, 'isdefault', mrNo, rsDiscardChanges,
+      mrCancel, rsCancel], 0)
     of
       mrNo: ;
       mrCancel: Result := False;
@@ -696,8 +746,8 @@ function TForm1.CheckStopped: Boolean;
 begin
   Result := True;
   if Script.Exec.Status in [isRunning, isPaused] then
-  case QuestionDlg('', 'Program is running. Do you want to stop it?',
-    mtWarning, [mrYes, 'Stop it', 'isdefault', mrCancel, 'Cancel'], 0)
+  case QuestionDlg('', rsProgramIsRunningDoYouWantToStopIt,
+    mtWarning, [mrYes, rsStopIt, 'isdefault', mrCancel, rsCancel], 0)
   of
     mrCancel: Result := False;
     mrYes: actStop.Execute;
