@@ -21,6 +21,7 @@ type
     actFindNext: TAction;
     Action1: TAction;
     actFindPrev: TAction;
+    actAbout: TAction;
     actWatch: TAction;
     actNew: TAction;
     actStop: TAction;
@@ -103,6 +104,7 @@ type
     Editor: TSynEdit;
     Splitter2: TSplitter;
     SynPasSyn1: TSynPasSyn;
+    procedure actAboutExecute(Sender: TObject);
     procedure actBreakpointExecute(Sender: TObject);
     procedure actCompileExecute(Sender: TObject);
     procedure actFindExecute(Sender: TObject);
@@ -175,7 +177,7 @@ var
 implementation
 
 uses
-  math, Variants, StrUtils, uPSRuntime, uPSDebugger;
+  math, about, Variants, StrUtils, uPSRuntime, uPSDebugger;
 
 {$R *.lfm}
 
@@ -188,8 +190,8 @@ resourcestring
   rsLineDColDS = 'Line: %d, Col: %d (%s)';
   rsINS = 'INS';
   rsOVR = 'OVR';
-  rsSuccessfulyCompiled = '%sSuccessfuly compiled.';
-  rsCompilationFailed = '%sCompilation failed.';
+  rsSuccessfulyCompiled = 'Successfuly compiled.';
+  rsCompilationFailed = 'Compilation failed.';
   rsSuccessfulyExecuted = 'Successfuly executed.';
   rsRuntimeErrorSDDBytecodeDDS = '[Runtime error] %s(%d:%d), bytecode(%d:%d): '
     +'%s';
@@ -200,6 +202,7 @@ resourcestring
   rsProgramIsRunningDoYouWantToStopIt = 'Program is running. Do you want to '
     +'stop it?';
   rsStopIt = 'Stop it';
+  rsNotRunning = '(not running)';
 
 const
   // Identifier characters
@@ -223,9 +226,10 @@ end;
 function MyReadLn(const Question: String): String;
 begin
   Result := InputBox(Question, '', '');
+  Form1.moMessages.Lines.Add(Question + Result);
 end;
 
-procedure MyVariantWrite(V: Variant);
+function VariantWrite(V: Variant): String;
 var
   S: String;
   I, N: Integer;
@@ -270,12 +274,25 @@ begin
         end;
       end;
   end;
-  Form1.moMessages.Lines.Add(S);
+  Result := S;
+end;
+
+procedure MyVariantWrite(V: Variant);
+var
+  I: Integer;
+  S: String;
+begin
+  S := VariantWrite(V);
+  I := Pred(Form1.moMessages.Lines.Count);
+  if I < 0 then
+    Form1.moMessages.Lines.Add(S) else
+    Form1.moMessages.Lines[I] := Form1.moMessages.Lines[I] + S;
 end;
 
 procedure MyVariantWriteLn(V: Variant);
 begin
   MyVariantWrite(V);
+  Form1.moMessages.Lines.Add('');
 end;
 
 { TForm1 }
@@ -341,6 +358,11 @@ begin
   ToggleBreakpoint(Editor.CaretY);
 end;
 
+procedure TForm1.actAboutExecute(Sender: TObject);
+begin
+  AboutForm.ShowModal;
+end;
+
 procedure TForm1.ToggleBreakpoint(Line: LongInt);
 begin
   if Script.HasBreakPoint(Script.MainFileName, Line) then
@@ -374,12 +396,15 @@ begin
   if CheckStopped and CheckSaved then
   begin
     Editor.ClearAll;
-    Editor.Lines.Text := 'begin' + LineEnding + 'end.';
+    Editor.Lines.Text :=
+      'begin' + LineEnding +
+      'end.';
     Editor.Modified := False;
     FileName := '';
     ClearAllBookmarks;
     Script.ClearBreakPoints;
     FCompiled := False;
+    Editor.Modified := False;
   end;
 end;
 
@@ -418,7 +443,7 @@ begin
       Continue;
     if FExecuting then
       Cont := Script.GetVarContents(SID) else
-      Cont := '(not running)';
+      Cont := rsNotRunning;
     moWatches.Lines[I] := SID + ' = ' + Cont;
   end;
 end;
@@ -428,6 +453,7 @@ begin
   Editor.Lines.LoadFromFile(actOpen.Dialog.FileName);
   FileName := actOpen.Dialog.FileName;
   FCompiled := False;
+  Editor.Modified := False;
   ClearAllBookmarks;
   Script.ClearBreakPoints;
   UpdateTitle; // to put the name on the title
@@ -689,15 +715,10 @@ begin
   for I := 0 to Pred(Script.CompilerMessageCount) do
     Msgs := Msgs + Script.CompilerMessages[I].MessageToString + LineEnding;
   if FCompiled then
-    Msgs := Format(rsSuccessfulyCompiled, [Msgs]) else
-    Msgs := Format(rsCompilationFailed, [Msgs]);
+    Msgs := Msgs + rsSuccessfulyCompiled else
+    Msgs := Msgs + rsCompilationFailed;
   moMessages.Text := Msgs;
-
-  if FCompiled then
-  begin
-    //Script.Comp.GetDebugOutput(Msgs);
-    //Script.Execute;
-  end;
+  moMessages.Lines.Add('');
   Result := FCompiled;
 end;
 
@@ -721,14 +742,11 @@ begin
 end;
 
 function TForm1.CheckSaved: Boolean;
-var
-  Saved: Boolean;
 begin
   Result := True;
   if Editor.Modified then
-    case QuestionDlg('', rsSourceModified,
-      mtWarning, [mrYes, rsSave, 'isdefault', mrNo, rsDiscardChanges,
-      mrCancel, rsCancel], 0)
+    case QuestionDlg('', rsSourceModified, mtWarning, [mrYes, rsSave,
+      'isdefault', mrNo, rsDiscardChanges, mrCancel, rsCancel], 0)
     of
       mrNo: ;
       mrCancel: Result := False;
