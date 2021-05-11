@@ -577,6 +577,8 @@ begin
   Sender.AddFunction(@MyReadLn, 'function ReadLn(Question: String): String;');
   Sender.AddFunction(@MyVariantWrite, 'procedure Write(V: Variant);');
   Sender.AddFunction(@MyVariantWriteLn, 'procedure WriteLn(V: Variant);');
+  Sender.AddFunction(@Randomize, 'procedure Randomize;');
+  Sender.AddFunction(@Random, 'function  Random(L: Longint): Longint;');
 end;
 
 procedure TForm1.ScriptExecute(Sender: TPSScript);
