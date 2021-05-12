@@ -33,10 +33,12 @@
 `Write` and `WriteLn` are not implemented for files.
 
 # Read, ReadLn
-`Read` and `ReadLn` are also special features. `ReadLn` is substituted by a function returning string.
+`Read` and `ReadLn` are also special features. `ReadLn` is substituted with a function with a single parameter.
 
 | Statement  | Equivalent  | Comment |
 | :------------ | :------------ | :------------ |
-| `Write('Enter A:'); ReadLn(A);`  | `A := StrToInt(ReadLn('Enter A:'));`  | Single argument |
+| `ReadLn(A);`  | `ReadLn(A);`  | Single argument |
+| `ReadLn(A,B);` |  | **Not possible** |
 
 `ReadLn` is not implemented for files.
+`Read` is not implemented.
