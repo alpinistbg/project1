@@ -41,8 +41,10 @@ type
     actOpen: TFileOpen;
     actSaveAs: TFileSaveAs;
     cbFindWhat: TComboBox;
+    edtInput: TEdit;
     ImageList1: TImageList;
     ImageList2: TImageList;
+    lblInput: TLabel;
     lblCaretPosition: TLabel;
     MainMenu1: TMainMenu;
     moWatches: TMemo;
@@ -83,6 +85,7 @@ type
     MenuItem9: TMenuItem;
     Panel1: TPanel;
     Panel2: TPanel;
+    pnlInput: TPanel;
     pnlMessages: TPanel;
     pnlSearchTools: TPanel;
     pnlToolbar: TPanel;
@@ -124,6 +127,7 @@ type
     procedure actWatchExecute(Sender: TObject);
     procedure cbFindWhatKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtInputEditingDone(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
     procedure FormShow(Sender: TObject);
     procedure moMessagesDblClick(Sender: TObject);
@@ -147,6 +151,7 @@ type
     FStepping: Boolean;
     FIdling: Boolean;
     FExecuting: Boolean;
+    FConsoleStart: Boolean;
     FInfoRow: Cardinal;
     FResume: Boolean;
     FActiveLine: Integer;
@@ -165,6 +170,8 @@ type
     procedure ClearAllBookmarks;
     procedure UpdateWatches;
     procedure ResetScript;
+    procedure ConsoleClear;
+    procedure ConsoleWrite(S: String; ANewLine: Boolean = False);
   public
 
     property FileName: String read FFileName write SetFileName;
@@ -177,7 +184,7 @@ var
 implementation
 
 uses
-  math, about, Variants, StrUtils, uPSRuntime, uPSDebugger;
+  math, about, Variants, StrUtils, uPSRuntime, uPSDebugger, uPSCompiler;
 
 {$R *.lfm}
 
@@ -192,7 +199,7 @@ resourcestring
   rsOVR = 'OVR';
   rsSuccessfulyCompiled = 'Successfuly compiled.';
   rsCompilationFailed = 'Compilation failed.';
-  rsSuccessfulyExecuted = 'Successfuly executed.';
+  rsSuccessfulyExecuted = 'Program exited.';
   rsRuntimeErrorSDDBytecodeDDS = '[Runtime error] %s(%d:%d), bytecode(%d:%d): '
     +'%s';
   rsSourceModified = 'Source modified. Do you want to save changes?';
@@ -217,16 +224,12 @@ const
   BG_BKPT = clRed;
   FG_ACTIVE_ON_BKPT = clRed;
   BG_ACTIVE_ON_BKPT = clWhite;
+var
+  ReadingInput: Boolean;
 
 procedure MyWriteLn(const S: String);
 begin
   Form1.moMessages.Lines.Add(S);
-end;
-
-function MyReadLn(const Question: String): String;
-begin
-  Result := InputBox(Question, '', '');
-  Form1.moMessages.Lines.Add(Question + Result);
 end;
 
 function VariantWrite(V: Variant): String;
@@ -278,21 +281,58 @@ begin
 end;
 
 procedure MyVariantWrite(V: Variant);
-var
-  I: Integer;
-  S: String;
 begin
-  S := VariantWrite(V);
-  I := Pred(Form1.moMessages.Lines.Count);
-  if I < 0 then
-    Form1.moMessages.Lines.Add(S) else
-    Form1.moMessages.Lines[I] := Form1.moMessages.Lines[I] + S;
+  Form1.ConsoleWrite(VariantWrite(V));
 end;
 
 procedure MyVariantWriteLn(V: Variant);
 begin
-  MyVariantWrite(V);
-  Form1.moMessages.Lines.Add('');
+  Form1.ConsoleWrite(VariantWrite(V), True);
+end;
+
+function ReadLine: String;
+begin
+  with Form1 do
+  begin
+    edtInput.Clear;
+    pnlInput.Visible := True;
+    edtInput.SetFocus;
+  end;
+  ReadingInput := True;
+  while ReadingInput do
+  begin
+    Application.ProcessMessages;
+    Sleep(10);
+  end;
+  Result := Form1.edtInput.Text;
+  Form1.pnlInput.Visible := False;
+end;
+
+function ReadLn_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
+var
+  arr: TPSVariantIFC;
+  S: String;
+  V: LongInt;
+begin
+  Result := true;
+  arr := NewTPSVariantIFC(Stack[Stack.Count - 1], True);
+  S := ReadLine;
+  Form1.ConsoleWrite(S, True);
+  V := StrToIntDef(S, 0);
+  case arr.aType.BaseType of
+    btU8         : Stack.SetInt(-1, Tbtu8(V));     //Byte
+    btS8         : Stack.SetInt(-1, Tbts8(V));     //ShortInt
+    btU16        : Stack.SetInt(-1, Tbtu16(V));    //Word
+    btS16        : Stack.SetInt(-1, Tbts16(V));    //SmallInt
+    btU32        : Stack.SetInt(-1, Tbtu32(V));    //Cardinal/LongWord
+    btS32        : Stack.SetInt(-1, Tbts32(V));    //Integer/LongInt
+    btS64        : Stack.SetInt64(-1, Tbts64(V));
+    btSingle, btDouble, btExtended
+                 : Stack.SetReal(-1, TbtExtended(StrToFloatDef(S, 0)));
+    btString     : Stack.SetString(-1, S);
+    else
+      Result := False;
+  end;
 end;
 
 { TForm1 }
@@ -530,6 +570,11 @@ begin
     actFindNext.Execute;
 end;
 
+procedure TForm1.edtInputEditingDone(Sender: TObject);
+begin
+  ReadingInput := False;
+end;
+
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   CanClose := CheckStopped and CheckSaved;
@@ -563,6 +608,30 @@ begin
   UpdateActs;
 end;
 
+procedure TForm1.ConsoleClear;
+begin
+  moMessages.Clear;
+  moMessages.Lines.Add('');
+end;
+
+procedure TForm1.ConsoleWrite(S: String; ANewLine: Boolean);
+var
+  N: Integer;
+begin
+  if FConsoleStart then
+  begin
+    FConsoleStart := False;
+    ConsoleClear;
+  end;
+  N := Pred(moMessages.Lines.Count);
+  moMessages.Lines[N] := moMessages.Lines[N] + S;
+  if ANewLine then
+    moMessages.Lines.Add('');
+  moMessages.SelStart := moMessages.GetTextLen;
+  moMessages.SelLength := 0;
+  moMessages.Refresh;
+end;
+
 procedure TForm1.ScriptBreakpoint(Sender: TObject;
   const FileName: tbtstring; Posit_, Row, Col: Cardinal);
 begin
@@ -574,14 +643,24 @@ end;
 procedure TForm1.ScriptCompile(Sender: TPSScript);
 begin
   //Sender.AddFunction(@MyWriteLn, 'procedure WriteLn(S: String);');
-  Sender.AddFunction(@MyReadLn, 'function ReadLn(Question: String): String;');
+  //Sender.AddFunction(@ReadLine, 'function ReadLn(Question: String): String;');
   Sender.AddFunction(@MyVariantWrite, 'procedure Write(V: Variant);');
   Sender.AddFunction(@MyVariantWriteLn, 'procedure WriteLn(V: Variant);');
+
+  with Sender.Comp.AddFunction('procedure ReadLn;').Decl do
+    with AddParam do
+    begin
+      OrgName := 'x';
+      Mode := pmInOut;
+    end;
+  Sender.Exec.RegisterFunctionName('ReadLn', @ReadLn_, Nil, Nil);
+
 end;
 
 procedure TForm1.ScriptExecute(Sender: TPSScript);
 begin
   FExecuting := True;
+  FConsoleStart := True;
   UpdateTitle;
   UpdateActs;
 end;
@@ -627,7 +706,7 @@ begin
   if not (Script.Exec.DebugMode in [dmRun, dmStepOver]) then
   begin
     FActiveLine := Row;
-    CaretPos(FActiveLine, 1);
+    CaretPos(FActiveLine, Col);
     Editor.Refresh;
   end
   else
