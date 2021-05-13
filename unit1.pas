@@ -226,8 +226,9 @@ const
   BG_ACTIVE = clBlue;
   FG_BKPT = clWhite;
   BG_BKPT = clRed;
-  FG_ACTIVE_ON_BKPT = clRed;
-  BG_ACTIVE_ON_BKPT = clWhite;
+  FG_ACTIVE_ON_BKPT = clWhite; 
+  BG_ACTIVE_ON_BKPT = clMaroon;
+
 var
   ReadingInput: Boolean;
 
@@ -408,11 +409,24 @@ begin
 end;
 
 procedure TForm1.ToggleBreakpoint(Line: LongInt);
+var
+  Mark: TSynEditMark;
 begin
   if Script.HasBreakPoint(Script.MainFileName, Line) then
-    Script.ClearBreakPoint(Script.MainFileName, Line)
+  begin
+    Script.ClearBreakPoint(Script.MainFileName, Line);
+    Editor.Marks.Line[Line]. Clear(True);
+  end
   else
+  begin
     Script.SetBreakPoint(Script.MainFileName, Line);
+    Mark := TSynEditMark.Create(Editor);
+    Mark.Line := Line;
+    Mark.ImageList := ImageList2;
+    Mark.ImageIndex := 10;
+    Mark.Visible := True;
+    Editor.Marks.Add(Mark);
+  end;
   Editor.Refresh;
 end;
 
@@ -586,6 +600,7 @@ end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
+  Editor.Font.Name := {$IFDEF WINDOWS}'Consolas'{$ELSE}'courier'{$ENDIF};
   UpdateTitle;
   UpdateActs;
 end;
