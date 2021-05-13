@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
-  ExtCtrls, LazHelpHTML;
+  ExtCtrls;
 
 type
 
@@ -19,6 +19,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    lblVersion: TLabel;
     lblName: TLabel;
     Label6: TLabel;
     Panel1: TPanel;
@@ -39,21 +40,22 @@ var
 implementation
 
 uses
-  LCLIntf;
+  LCLIntf, Unit1;
 
 {$R *.lfm}
 
 { TAboutForm }
 
+procedure TAboutForm.FormCreate(Sender: TObject);
+begin
+  Image1.Picture.Assign(Application.Icon);
+  lblVersion.Caption := Format('Version %d.%d', [PrgVersion, PrgRevision]);
+end;
+
 procedure TAboutForm.URLLabelMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   OpenURL(TLabel(Sender).Caption);
-end;
-
-procedure TAboutForm.FormCreate(Sender: TObject);
-begin
-  Image1.Picture.Assign(Application.Icon);
 end;
 
 procedure TAboutForm.URLLabelMouseEnter(Sender: TObject);

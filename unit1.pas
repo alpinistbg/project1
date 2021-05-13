@@ -10,6 +10,10 @@ uses
   SynEditTypes, uPSUtils, SynEditMarks,
   SynCompletion;
 
+const
+  PrgVersion = 1;
+  PrgRevision = 0;
+
 type
 
   { TForm1 }
@@ -422,8 +426,8 @@ begin
   rp := Pos(')', AMess);
   if (lp > 0) and (scp > lp) and (rp > scp) then
   begin
-    R := Copy(AMess, lp + 1,scp - lp - 1);
-    C := Copy(AMess, scp+1, rp - scp - 1);
+    R := Copy(AMess, lp + 1, scp - lp - 1);
+    C := Copy(AMess, scp + 1, rp - scp - 1);
     Result.X := StrToInt(Trim(C));
     Result.Y := StrToInt(Trim(R));
   end

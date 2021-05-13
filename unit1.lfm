@@ -4,7 +4,7 @@ object Form1: TForm1
   Top = 96
   Width = 742
   Caption = 'Form1'
-  ClientHeight = 527
+  ClientHeight = 526
   ClientWidth = 742
   Menu = MainMenu1
   OnCloseQuery = FormCloseQuery
@@ -13,7 +13,7 @@ object Form1: TForm1
   LCLVersion = '1.9.0.0'
   inline Editor: TSynEdit
     Left = 0
-    Height = 310
+    Height = 309
     Top = 46
     Width = 742
     Align = alClient
@@ -26,7 +26,7 @@ object Form1: TForm1
     TabOrder = 0
     BookMarkOptions.BookmarkImages = ImageList2
     BorderStyle = bsNone
-    Gutter.Width = 62
+    Gutter.Width = 60
     Gutter.MouseActions = <>
     RightGutter.Width = 0
     RightGutter.MouseActions = <>
@@ -498,7 +498,7 @@ object Form1: TForm1
         MouseActions = <>
       end
       object SynGutterLineNumber1: TSynGutterLineNumber
-        Width = 19
+        Width = 17
         MouseActions = <>
         MarkupInfo.Background = clBtnFace
         MarkupInfo.Foreground = clNone
@@ -533,7 +533,7 @@ object Form1: TForm1
   object pnlBott: TPanel
     Left = 0
     Height = 29
-    Top = 498
+    Top = 497
     Width = 742
     Align = alBottom
     ClientHeight = 29
@@ -545,10 +545,10 @@ object Form1: TForm1
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pnlBott
       AnchorSideRight.Side = asrBottom
-      Left = 662
-      Height = 17
+      Left = 666
+      Height = 16
       Top = 6
-      Width = 71
+      Width = 67
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
       BorderSpacing.Right = 8
@@ -561,7 +561,7 @@ object Form1: TForm1
     Cursor = crVSplit
     Left = 0
     Height = 4
-    Top = 356
+    Top = 355
     Width = 742
     Align = alBottom
     Beveled = True
@@ -782,13 +782,13 @@ object Form1: TForm1
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = SpeedButton10
         Left = 9
-        Height = 27
-        Top = 9
+        Height = 24
+        Top = 10
         Width = 176
         Anchors = [akTop, akRight]
         BorderSpacing.Right = 5
         Constraints.MinWidth = 176
-        ItemHeight = 0
+        ItemHeight = 16
         OnKeyDown = cbFindWhatKeyDown
         ParentFont = False
         TabOrder = 0
@@ -819,7 +819,7 @@ object Form1: TForm1
   object pnlMessages: TPanel
     Left = 0
     Height = 138
-    Top = 360
+    Top = 359
     Width = 742
     Align = alBottom
     ClientHeight = 138
@@ -880,10 +880,10 @@ object Form1: TForm1
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = pnlInput
         AnchorSideRight.Side = asrBottom
-        Left = 56
+        Left = 50
         Height = 27
         Top = 5
-        Width = 668
+        Width = 674
         Anchors = [akTop, akLeft, akRight]
         AutoSize = False
         BorderSpacing.Right = 15
@@ -896,9 +896,9 @@ object Form1: TForm1
         AnchorSideTop.Control = pnlInput
         AnchorSideTop.Side = asrCenter
         Left = 16
-        Height = 17
+        Height = 16
         Top = 10
-        Width = 35
+        Width = 29
         BorderSpacing.Left = 15
         BorderSpacing.Right = 5
         Caption = 'Input'

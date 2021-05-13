@@ -1,24 +1,24 @@
 object AboutForm: TAboutForm
   Left = 586
-  Height = 262
+  Height = 295
   Top = 235
   Width = 589
   BorderStyle = bsNone
   Caption = 'AboutForm'
-  ClientHeight = 262
+  ClientHeight = 295
   ClientWidth = 589
   OnCreate = FormCreate
   Position = poMainFormCenter
   LCLVersion = '1.9.0.0'
   object Panel1: TPanel
     Left = 0
-    Height = 262
+    Height = 295
     Top = 0
     Width = 589
     Align = alClient
     BevelColor = clRed
     BevelOuter = bvSpace
-    ClientHeight = 262
+    ClientHeight = 295
     ClientWidth = 589
     Color = clWhite
     ParentColor = False
@@ -32,7 +32,7 @@ object AboutForm: TAboutForm
       AnchorSideBottom.Side = asrBottom
       Left = 503
       Height = 26
-      Top = 223
+      Top = 256
       Width = 73
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 12
@@ -43,10 +43,10 @@ object AboutForm: TAboutForm
       TabOrder = 0
     end
     object Label1: TLabel
-      Left = 86
-      Height = 17
-      Top = 96
-      Width = 264
+      Left = 84
+      Height = 16
+      Top = 128
+      Width = 217
       Caption = 'https://github.com/alpinistbg/project1'
       Font.Color = clBlue
       ParentColor = False
@@ -56,10 +56,10 @@ object AboutForm: TAboutForm
       OnMouseLeave = URLLabelMouseLeave
     end
     object Label2: TLabel
-      Left = 86
-      Height = 17
-      Top = 136
-      Width = 299
+      Left = 84
+      Height = 16
+      Top = 168
+      Width = 247
       Caption = 'https://github.com/remobjects/pascalscript'
       Font.Color = clBlue
       ParentColor = False
@@ -69,10 +69,10 @@ object AboutForm: TAboutForm
       OnMouseLeave = URLLabelMouseLeave
     end
     object Label3: TLabel
-      Left = 86
-      Height = 17
-      Top = 156
-      Width = 451
+      Left = 84
+      Height = 16
+      Top = 188
+      Width = 376
       Caption = 'https://svn.freepascal.org/svn/lazarus/trunk/components/synedit/'
       Font.Color = clBlue
       ParentColor = False
@@ -82,10 +82,10 @@ object AboutForm: TAboutForm
       OnMouseLeave = URLLabelMouseLeave
     end
     object Label4: TLabel
-      Left = 86
-      Height = 17
-      Top = 116
-      Width = 195
+      Left = 84
+      Height = 16
+      Top = 148
+      Width = 168
       Caption = 'https://www.lazarus-ide.org/'
       Font.Color = clBlue
       ParentColor = False
@@ -96,9 +96,9 @@ object AboutForm: TAboutForm
     end
     object lblName: TLabel
       Left = 86
-      Height = 21
+      Height = 22
       Top = 35
-      Width = 73
+      Width = 76
       Caption = 'project1'
       Font.Height = -18
       Font.Style = [fsBold]
@@ -107,9 +107,9 @@ object AboutForm: TAboutForm
     end
     object Label6: TLabel
       Left = 86
-      Height = 17
+      Height = 16
       Top = 64
-      Width = 283
+      Width = 241
       Caption = 'Minimalistic IDE for coding in Pascal Script'
       ParentColor = False
       ParentFont = False
@@ -120,13 +120,21 @@ object AboutForm: TAboutForm
       AnchorSideRight.Control = lblName
       Left = 44
       Height = 32
-      Top = 29
+      Top = 30
       Width = 32
       Anchors = [akTop, akRight]
       BorderSpacing.Right = 10
       Proportional = True
       Stretch = True
       Transparent = True
+    end
+    object lblVersion: TLabel
+      Left = 86
+      Height = 16
+      Top = 80
+      Width = 56
+      Caption = 'lblVersion'
+      ParentColor = False
     end
   end
 end
