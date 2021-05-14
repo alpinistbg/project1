@@ -52,6 +52,10 @@ Compared to Pascal, the script has the following important differences:
 - No subrange types, e.g. `type month=1..12;` 
 - No `File` type 
 - No nested subroutines
+- No typed constants
+- No multidimensional arrays like `a[i,j]`, although `array of array` construct is possible, e.g. `a[i][j]` 
+- Array subscription in form n..m, n,m integers. `array[boolen] of...` not possible
+- `ord` `pred` `succ` are functions, not intrinsics. Can't be used in definitions of types or constants
 
 
 

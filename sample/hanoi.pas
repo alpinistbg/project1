@@ -44,11 +44,9 @@ end;
 
 (********************************************************)
 
-
 begin    (* Main *)
-   //write ('Моля въведете броя на дисковете в кулата ===> ');
-   //readln (numdiscs);
-   numdiscs := StrToInt(readln('Моля въведете броя на дисковете в кулата ===> '));
-   writeln([]);
+   write ('Моля въведете броя на дисковете в кулата ===> ');
+   readln (numdiscs);
+   writeln('');
    DoTowers (numdiscs, 1, 3, 2)
 end.     (* Main *)

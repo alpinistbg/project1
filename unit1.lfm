@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 517
+  Left = 252
   Height = 685
   Top = 96
-  Width = 928
+  Width = 1193
   Caption = 'Form1'
   ClientHeight = 660
-  ClientWidth = 928
+  ClientWidth = 1193
   DesignTimePPI = 120
   Menu = MainMenu1
   OnCloseQuery = FormCloseQuery
@@ -14,9 +14,9 @@ object Form1: TForm1
   LCLVersion = '1.9.0.0'
   inline Editor: TSynEdit
     Left = 0
-    Height = 393
+    Height = 570
     Top = 54
-    Width = 928
+    Width = 629
     Align = alClient
     Font.Height = -18
     Font.Name = 'Consolas'
@@ -537,10 +537,10 @@ object Form1: TForm1
     Left = 0
     Height = 36
     Top = 624
-    Width = 928
+    Width = 1193
     Align = alBottom
     ClientHeight = 36
-    ClientWidth = 928
+    ClientWidth = 1193
     ParentFont = False
     TabOrder = 1
     object lblCaretPosition: TLabel
@@ -548,7 +548,7 @@ object Form1: TForm1
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pnlBott
       AnchorSideRight.Side = asrBottom
-      Left = 847
+      Left = 1112
       Height = 20
       Top = 8
       Width = 70
@@ -560,25 +560,24 @@ object Form1: TForm1
       ParentFont = False
     end
   end
-  object Splitter1: TSplitter
-    Cursor = crVSplit
-    Left = 0
-    Height = 5
-    Top = 447
-    Width = 928
-    Align = alBottom
+  object splitMain: TSplitter
+    Left = 629
+    Height = 570
+    Top = 54
+    Width = 8
+    Align = alRight
     Beveled = True
-    ResizeAnchor = akBottom
+    ResizeAnchor = akRight
   end
   object pnlToolbar: TPanel
     Left = 0
     Height = 54
     Top = 0
-    Width = 928
+    Width = 1193
     Align = alTop
     AutoSize = True
     ClientHeight = 54
-    ClientWidth = 928
+    ClientWidth = 1193
     ParentFont = False
     TabOrder = 3
     object pnlMenuTools: TPanel
@@ -771,20 +770,20 @@ object Form1: TForm1
       Left = 513
       Height = 52
       Top = 1
-      Width = 414
+      Width = 679
       Align = alRight
       Anchors = [akTop, akLeft, akRight, akBottom]
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 6
       ClientHeight = 52
-      ClientWidth = 414
+      ClientWidth = 679
       ParentFont = False
       TabOrder = 1
       object cbFindWhat: TComboBox
         AnchorSideTop.Control = pnlSearchTools
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = SpeedButton10
-        Left = 141
+        Left = 406
         Height = 28
         Top = 12
         Width = 220
@@ -801,7 +800,7 @@ object Form1: TForm1
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = pnlSearchTools
         AnchorSideRight.Side = asrBottom
-        Left = 367
+        Left = 632
         Height = 40
         Top = 6
         Width = 32
@@ -820,22 +819,27 @@ object Form1: TForm1
     end
   end
   object pnlMessages: TPanel
-    Left = 0
-    Height = 172
-    Top = 452
-    Width = 928
-    Align = alBottom
-    ClientHeight = 172
-    ClientWidth = 928
+    Left = 637
+    Height = 570
+    Top = 54
+    Width = 556
+    Align = alRight
+    ClientHeight = 570
+    ClientWidth = 556
     ParentFont = False
     TabOrder = 4
     object moMessages: TMemo
       Left = 1
-      Height = 125
+      Height = 390
       Top = 1
-      Width = 602
+      Width = 554
       Align = alClient
       BorderStyle = bsNone
+      Color = clBlack
+      Font.Color = clYellow
+      Font.Height = -20
+      Font.Name = 'Consolas'
+      Font.Style = [fsBold]
       Lines.Strings = (
         'Messages...'
       )
@@ -845,33 +849,34 @@ object Form1: TForm1
       TabOrder = 0
     end
     object moWatches: TMemo
-      Left = 609
+      Left = 1
       Height = 125
-      Top = 1
-      Width = 318
-      Align = alRight
+      Top = 399
+      Width = 554
+      Align = alBottom
       BorderStyle = bsNone
       Color = clCream
       ParentFont = False
       TabOrder = 1
     end
-    object Splitter2: TSplitter
-      Left = 603
-      Height = 125
-      Top = 1
-      Width = 6
-      Align = alRight
+    object splitMessages: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 8
+      Top = 391
+      Width = 554
+      Align = alBottom
       Beveled = True
-      ResizeAnchor = akRight
+      ResizeAnchor = akBottom
     end
     object pnlInput: TPanel
       Left = 1
       Height = 45
-      Top = 126
-      Width = 926
+      Top = 524
+      Width = 554
       Align = alBottom
       ClientHeight = 45
-      ClientWidth = 926
+      ClientWidth = 554
       Color = clMoneyGreen
       ParentColor = False
       ParentFont = False
@@ -885,11 +890,10 @@ object Form1: TForm1
         AnchorSideRight.Control = pnlInput
         AnchorSideRight.Side = asrBottom
         Left = 60
-        Height = 34
-        Top = 5
-        Width = 846
+        Height = 28
+        Top = 8
+        Width = 474
         Anchors = [akTop, akLeft, akRight]
-        AutoSize = False
         BorderSpacing.Right = 19
         OnEditingDone = edtInputEditingDone
         ParentFont = False
@@ -1096,6 +1100,11 @@ object Form1: TForm1
       Caption = 'About...'
       OnExecute = actAboutExecute
     end
+    object actLayout: TAction
+      Category = 'File'
+      Caption = 'Change layout'
+      OnExecute = actLayoutExecute
+    end
   end
   object MainMenu1: TMainMenu
     Left = 198
@@ -1118,6 +1127,12 @@ object Form1: TForm1
         Action = actSaveAs
       end
       object MenuItem4: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem35: TMenuItem
+        Action = actLayout
+      end
+      object MenuItem36: TMenuItem
         Caption = '-'
       end
       object MenuItem5: TMenuItem
