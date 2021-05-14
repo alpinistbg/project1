@@ -26,6 +26,7 @@ type
     Action1: TAction;
     actFindPrev: TAction;
     actAbout: TAction;
+    actLayout: TAction;
     actWatch: TAction;
     actNew: TAction;
     actStop: TAction;
@@ -51,6 +52,8 @@ type
     lblInput: TLabel;
     lblCaretPosition: TLabel;
     MainMenu1: TMainMenu;
+    MenuItem35: TMenuItem;
+    MenuItem36: TMenuItem;
     moWatches: TMemo;
     moMessages: TMemo;
     MenuItem1: TMenuItem;
@@ -107,9 +110,9 @@ type
     SpeedButton7: TSpeedButton;
     SpeedButton8: TSpeedButton;
     SpeedButton9: TSpeedButton;
-    Splitter1: TSplitter;
+    splitMain: TSplitter;
     Editor: TSynEdit;
-    Splitter2: TSplitter;
+    splitMessages: TSplitter;
     SynPasSyn1: TSynPasSyn;
     procedure actAboutExecute(Sender: TObject);
     procedure actBreakpointExecute(Sender: TObject);
@@ -117,6 +120,7 @@ type
     procedure actFindExecute(Sender: TObject);
     procedure actFindNextExecute(Sender: TObject);
     procedure actFindPrevExecute(Sender: TObject);
+    procedure actLayoutExecute(Sender: TObject);
     procedure actNewExecute(Sender: TObject);
     procedure actOpenBeforeExecute(Sender: TObject);
     procedure actPauseExecute(Sender: TObject);
@@ -403,6 +407,28 @@ end;
 procedure TForm1.actFindPrevExecute(Sender: TObject);
 begin
   Find([ssoBackwards]);
+end;
+
+procedure TForm1.actLayoutExecute(Sender: TObject);
+begin
+  if pnlMessages.Align = alBottom then
+  begin
+    pnlMessages.Align := alRight;
+    splitMain.Align := alRight;
+    moWatches.Align := alBottom;
+    splitMessages.Align := alBottom;
+    pnlMessages.Width := ClientWidth div 3;
+    moWatches.Height := ClientHeight div 4;
+  end
+  else
+  begin
+    pnlMessages.Align := alBottom;
+    splitMain.Align := alBottom;
+    moWatches.Align := alRight;
+    splitMessages.Align := alRight;
+    pnlMessages.Height := ClientHeight div 3;
+    moWatches.Width := ClientWidth div 4;
+  end;
 end;
 
 procedure TForm1.actBreakpointExecute(Sender: TObject);
