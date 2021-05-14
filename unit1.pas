@@ -172,6 +172,7 @@ type
     procedure ToggleBreakpoint(Line: LongInt);
     function GetErrorLine(AMess: String): TPoint;
     procedure ClearAllBookmarks;
+    procedure ClearAllBreakpoints;
     procedure UpdateWatches;
     procedure ResetScript;
     procedure ConsoleClear;
@@ -218,7 +219,7 @@ resourcestring
 const
   // Identifier characters
   ID_FIRST = ['A'..'Z', 'a'..'z', '_'];
-  ID_SYMBOL = ID_FIRST + ['0'..'9', '.', '[', ']'];
+  ID_SYMBOL = ID_FIRST + ['0'..'9', '.'];
   ID_DELIMITERS = [#9..#127] - ID_SYMBOL;
 
   // Special line colors
@@ -328,6 +329,7 @@ begin
   Form1.ConsoleWrite(S, True);
   V := StrToIntDef(S, 0);
   case arr.aType.BaseType of
+    //btChar
     btU8         : Stack.SetInt(-1, Tbtu8(V));     //Byte
     btS8         : Stack.SetInt(-1, Tbts8(V));     //ShortInt
     btU16        : Stack.SetInt(-1, Tbtu16(V));    //Word
@@ -420,7 +422,7 @@ begin
   if Script.HasBreakPoint(Script.MainFileName, Line) then
   begin
     Script.ClearBreakPoint(Script.MainFileName, Line);
-    Editor.Marks.Line[Line]. Clear(True);
+    Editor.Marks.Line[Line].Clear(True);
   end
   else
   begin
@@ -459,13 +461,13 @@ begin
   if CheckStopped and CheckSaved then
   begin
     Editor.ClearAll;
-    Editor.Lines.Text :=
-      'begin' + LineEnding +
-      'end.';
+    Editor.Lines.Text := '';
+      //'begin' + LineEnding +
+      //'end.';
     Editor.Modified := False;
     FileName := '';
     ClearAllBookmarks;
-    Script.ClearBreakPoints;
+    ClearAllBreakpoints;
     FCompiled := False;
     Editor.Modified := False;
   end;
@@ -492,6 +494,13 @@ var
   I: Integer;
 begin
   for I in [0..9] do Editor.ClearBookMark(I);
+end;
+
+procedure TForm1.ClearAllBreakpoints;
+begin
+  Script.ClearBreakPoints;
+  while Editor.Marks.Count > 0 do
+    Editor.Marks.Delete(0);
 end;
 
 procedure TForm1.UpdateWatches;
@@ -605,7 +614,8 @@ end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
-  Editor.Font.Name := {$IFDEF WINDOWS}'Consolas'{$ELSE}'courier'{$ENDIF};
+  Editor.Font.Name :=
+    {$IFDEF WINDOWS}'Consolas'{$ELSE}'DejaVu Sans Mono'{$ENDIF};
   UpdateTitle;
   UpdateActs;
 end;
