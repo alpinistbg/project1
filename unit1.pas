@@ -188,7 +188,7 @@ var
 implementation
 
 uses
-  math, about, Variants, StrUtils, uPSRuntime, uPSDebugger, uPSCompiler;
+  LazUTF8, math, about, Variants, StrUtils, uPSRuntime, uPSDebugger, uPSCompiler;
 
 {$R *.lfm}
 
@@ -218,7 +218,7 @@ resourcestring
 const
   // Identifier characters
   ID_FIRST = ['A'..'Z', 'a'..'z', '_'];
-  ID_SYMBOL = ID_FIRST + ['0'..'9'];
+  ID_SYMBOL = ID_FIRST + ['0'..'9', '.', '[', ']'];
   ID_DELIMITERS = [#9..#127] - ID_SYMBOL;
 
   // Special line colors
@@ -297,13 +297,14 @@ end;
 
 function ReadLine: String;
 begin
+  ReadingInput := True;
   with Form1 do
   begin
     edtInput.Clear;
     pnlInput.Visible := True;
     edtInput.SetFocus;
+    UpdateActs;
   end;
-  ReadingInput := True;
   while ReadingInput do
   begin
     Application.ProcessMessages;
@@ -311,6 +312,7 @@ begin
   end;
   Result := Form1.edtInput.Text;
   Form1.pnlInput.Visible := False;
+  Form1.UpdateActs;
 end;
 
 function ReadLn_(Caller: TPSExec; p: TPSExternalProcRec; Global, Stack: TPSStack): Boolean;
@@ -319,6 +321,7 @@ var
   S: String;
   V: LongInt;
 begin
+  { TODO : add Char type }
   Result := true;
   arr := NewTPSVariantIFC(Stack[Stack.Count - 1], True);
   S := ReadLine;
@@ -366,11 +369,13 @@ end;
 
 procedure TForm1.UpdateActs;
 begin
-  actPause.Enabled := FExecuting and not FIdling;
+  actRun.Enabled := (not FExecuting or FIdling) and not ReadingInput;
+  actPause.Enabled := FExecuting and not FIdling and not ReadingInput;
   actStepInto.Enabled := not FExecuting or FIdling;
   actStepOver.Enabled := not FExecuting or FIdling;
   actStop.Enabled := FExecuting or FIdling;
-  actWatch.Enabled := FExecuting or FIdling;
+  actBreakpoint.Enabled := not ReadingInput;
+  actWatch.Enabled := (FExecuting or FIdling) and not ReadingInput;
 end;
 
 procedure TForm1.actCompileExecute(Sender: TObject);
@@ -666,7 +671,7 @@ begin
   Sender.AddFunction(@MyVariantWrite, 'procedure Write(V: Variant);');
   Sender.AddFunction(@MyVariantWriteLn, 'procedure WriteLn(V: Variant);');
   Sender.AddFunction(@Randomize, 'procedure Randomize;');
-  Sender.AddFunction(@Random, 'function  Random(L: Longint): Longint;');
+  Sender.AddFunction(@Random, 'function Random(L: Longint): Longint;');
 
   with Sender.Comp.AddFunction('procedure ReadLn;').Decl do
     with AddParam do
@@ -675,6 +680,11 @@ begin
       Mode := pmInOut;
     end;
   Sender.Exec.RegisterFunctionName('ReadLn', @ReadLn_, Nil, Nil);
+
+  //UTF8Length();
+  Sender.AddFunction(@UTF8Length, 'function UTF8Length(const S: String): Longint;');
+  //UTF8Copy();
+  Sender.AddFunction(@UTF8Copy, 'function UTF8Copy(const S: String; I, N: LongInt): String;');
 
 end;
 
