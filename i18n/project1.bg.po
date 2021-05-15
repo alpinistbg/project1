@@ -1,0 +1,312 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: about.rsversiondd
+msgid "Version %d.%d"
+msgstr "Версия %d.%d"
+
+#: taboutform.button1.caption
+msgid "Close"
+msgstr "Затваряне"
+
+#: taboutform.caption
+msgid "AboutForm"
+msgstr ""
+
+#: taboutform.label1.caption
+msgid "https://github.com/alpinistbg/project1"
+msgstr ""
+
+#: taboutform.label2.caption
+msgid "https://github.com/remobjects/pascalscript"
+msgstr ""
+
+#: taboutform.label3.caption
+msgid "https://svn.freepascal.org/svn/lazarus/trunk/components/synedit"
+msgstr ""
+
+#: taboutform.label4.caption
+msgid "https://www.lazarus-ide.org/"
+msgstr ""
+
+#: taboutform.label5.caption
+msgid ""
+"MIT License\n"
+"Copyright (c) 2021 alpinistbg\n"
+msgstr ""
+
+#: taboutform.label6.caption
+msgid "Minimalistic IDE for coding in Pascal Script"
+msgstr "Минималистична среда за програмиране на Паскал Скрипт"
+
+#: taboutform.lblname.caption
+msgid "project1"
+msgstr ""
+
+#: taboutform.lblversion.caption
+msgid "lblVersion"
+msgstr ""
+
+#: tform1.actabout.caption
+msgid "About..."
+msgstr "За програмата..."
+
+#: tform1.actbreakpoint.caption
+msgid "Breakpoint"
+msgstr "Контролна точка"
+
+#: tform1.actcompile.caption
+msgid "Compile"
+msgstr "Компилиране"
+
+#: tform1.actcopy.caption
+msgid "&Copy"
+msgstr "&Копиране"
+
+#: tform1.actcopy.hint
+msgid "Copy"
+msgstr "Копиране"
+
+#: tform1.actcut.caption
+msgid "Cu&t"
+msgstr "Отрязване"
+
+#: tform1.actcut.hint
+msgid "Cut"
+msgstr "Отрязване"
+
+#: tform1.actdelete.caption
+msgid "&Delete"
+msgstr "&Изтриване"
+
+#: tform1.actdelete.hint
+msgid "Delete"
+msgstr "Изтриване"
+
+#: tform1.actexit.caption
+msgid "E&xit"
+msgstr "И&зход"
+
+#: tform1.actexit.hint
+msgid "Exit"
+msgstr "Изход"
+
+#: tform1.actfind.caption
+msgid "Find"
+msgstr "Търси"
+
+#: tform1.actfindnext.caption
+msgid "Find Next"
+msgstr "Следващ"
+
+#: tform1.actfindprev.caption
+msgid "Find Previous"
+msgstr "Предишен"
+
+#: tform1.action1.caption
+msgid "Action1"
+msgstr ""
+
+#: tform1.actlayout.caption
+msgid "Change layout"
+msgstr "Промени изглед"
+
+#: tform1.actnew.caption
+msgid "New"
+msgstr "Нов"
+
+#: tform1.actopen.caption
+msgid "&Open ..."
+msgstr "&Зареждане"
+
+#: tform1.actopen.hint
+msgid "Open"
+msgstr "Зареждане"
+
+#: tform1.actpaste.caption
+msgid "&Paste"
+msgstr "&Поставяне"
+
+#: tform1.actpaste.hint
+msgid "Paste"
+msgstr "Поставяне"
+
+#: tform1.actpause.caption
+msgid "Pause"
+msgstr "Пауза"
+
+#: tform1.actrun.caption
+msgid "Run"
+msgstr "Старт"
+
+#: tform1.actsave.caption
+msgid "&Save"
+msgstr "&Запис"
+
+#: tform1.actsaveas.caption
+msgid "Save &As ..."
+msgstr "Запис &като ..."
+
+#: tform1.actsaveas.hint
+msgid "Save As"
+msgstr "Запис като"
+
+#: tform1.actselectall.caption
+msgid "Select &All"
+msgstr "Избери всичко"
+
+#: tform1.actselectall.hint
+msgid "Select All"
+msgstr "Избери всичко"
+
+#: tform1.actstepinto.caption
+msgid "Step Into"
+msgstr "Пристъпи"
+
+#: tform1.actstepover.caption
+msgid "Step Over"
+msgstr "Прескочи"
+
+#: tform1.actstop.caption
+msgid "Stop"
+msgstr "Стоп"
+
+#: tform1.actundo.caption
+msgid "&Undo"
+msgstr "&Отмяна"
+
+#: tform1.actundo.hint
+msgid "Undo"
+msgstr "Отмяна"
+
+#: tform1.actwatch.caption
+msgctxt "tform1.actwatch.caption"
+msgid "Watch"
+msgstr "Виж"
+
+#: tform1.caption
+msgid "Form1"
+msgstr ""
+
+#: tform1.edtinput.text
+msgid "edtInput"
+msgstr ""
+
+#: tform1.edtinput.texthint
+msgid "Press Enter when done"
+msgstr "Натисни Enter след въвеждане"
+
+#: tform1.lblcaretposition.caption
+msgid "Line: , Col: "
+msgstr "Ред: , Кол:"
+
+#: tform1.lblinput.caption
+msgid "Input"
+msgstr "Въведи"
+
+#: tform1.menuitem1.caption
+msgid "&File"
+msgstr "&Файл"
+
+#: tform1.menuitem19.caption
+msgid "&Run"
+msgstr "Старт"
+
+#: tform1.menuitem21.caption
+msgid "&Help"
+msgstr "Помощ"
+
+#: tform1.menuitem6.caption
+msgid "&Edit"
+msgstr "Редакция"
+
+#: unit1.rscancel
+msgid "Cancel"
+msgstr "Отказ"
+
+#: unit1.rscompilationfailed
+msgid "Compilation failed."
+msgstr "Неуспешна компилация"
+
+#: unit1.rsdiscardchanges
+msgid "Discard changes"
+msgstr "Отказ от промените"
+
+#: unit1.rsins
+msgid "INS"
+msgstr "ВМК"
+
+#: unit1.rslinedcolds
+msgid "Line: %d, Col: %d (%s)"
+msgstr "Ред: %d, Кол: %d (%s)"
+
+#: unit1.rsmessages
+msgid "Messages..."
+msgstr "Съобщения..."
+
+#: unit1.rsnoname
+msgid "Noname"
+msgstr "Няма име"
+
+#: unit1.rsnotrunning
+msgid "(not running)"
+msgstr "(не се изпълнява)"
+
+#: unit1.rsovr
+msgid "OVR"
+msgstr "ПРЗ"
+
+#: unit1.rspaused
+msgid " (paused) "
+msgstr "(на пауза)"
+
+#: unit1.rsprogramisrunningdoyouwanttostopit
+msgid "Program is running. Do you want to stop it?"
+msgstr "Програмата се изпълнява. Искате ли да я спрете?"
+
+#: unit1.rsrunning
+msgid " (running) "
+msgstr "(изпълнява се)"
+
+#: unit1.rsruntimeerrorsddbytecodedds
+msgid "[Runtime error] %s(%d:%d), bytecode(%d:%d): %s"
+msgstr "[Грешка при изпълнение] %s(%d:%d), байткод(%d:%d): %s"
+
+#: unit1.rssave
+msgid "Save"
+msgstr "Запис"
+
+#: unit1.rssourcemodified
+msgid "Source modified. Do you want to save changes?"
+msgstr "Изходния код е променен. Искате ли да запишете?"
+
+#: unit1.rsstopit
+msgid "Stop it"
+msgstr "Спри я"
+
+#: unit1.rssuccessfulycompiled
+msgid "Successfuly compiled."
+msgstr "Успешна компилация."
+
+#: unit1.rssuccessfulyexecuted
+msgid "Program exited."
+msgstr "Програмата приключи."
+
+#: unit1.rsvariable
+msgid "Variable"
+msgstr "Променлива"
+
+#: unit1.rswatch
+msgctxt "unit1.rswatch"
+msgid "Watch"
+msgstr "Виж"

@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   ActnList, StdActns, Menus, Buttons, uPSComponent, SynEdit, SynHighlighterPas,
   SynEditTypes, uPSUtils, SynEditMarks,
-  SynCompletion;
+  SynCompletion, translateu;
 
 const
   PrgVersion = 1;
@@ -102,6 +102,7 @@ type
     SpeedButton1: TSpeedButton;
     SpeedButton10: TSpeedButton;
     SpeedButton11: TSpeedButton;
+    SpeedButton12: TSpeedButton;
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
@@ -137,6 +138,7 @@ type
       Shift: TShiftState);
     procedure edtInputEditingDone(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: boolean);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure moMessagesDblClick(Sender: TObject);
     procedure ScriptAfterExecute(Sender: TPSScript);
@@ -193,7 +195,8 @@ var
 implementation
 
 uses
-  LazUTF8, math, about, Variants, StrUtils, uPSRuntime, uPSDebugger, uPSCompiler;
+  LazUTF8, math, about, Variants, StrUtils,
+  uPSRuntime, uPSDebugger, uPSCompiler;
 
 {$R *.lfm}
 
@@ -219,6 +222,7 @@ resourcestring
     +'stop it?';
   rsStopIt = 'Stop it';
   rsNotRunning = '(not running)';
+  rsMessages = 'Messages...';
 
 const
   // Identifier characters
@@ -636,6 +640,18 @@ end;
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: boolean);
 begin
   CanClose := CheckStopped and CheckSaved;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  Lang: String;
+begin
+  Lang := Application.GetOptionValue('l', 'lang');
+  if Lang = '' then
+    Lang := ExtractDelimited(2, ExtractFileName(ParamStr(0)), ['-', '_']);
+  if Lang <> '' then
+    TranslateFromResource(Lang);
+  moMessages.Text := rsMessages;
 end;
 
 procedure TForm1.FormShow(Sender: TObject);

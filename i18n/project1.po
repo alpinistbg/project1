@@ -1,0 +1,303 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: about.rsversiondd
+msgid "Version %d.%d"
+msgstr ""
+
+#: taboutform.button1.caption
+msgid "Close"
+msgstr ""
+
+#: taboutform.caption
+msgid "AboutForm"
+msgstr ""
+
+#: taboutform.label1.caption
+msgid "https://github.com/alpinistbg/project1"
+msgstr ""
+
+#: taboutform.label2.caption
+msgid "https://github.com/remobjects/pascalscript"
+msgstr ""
+
+#: taboutform.label3.caption
+msgid "https://svn.freepascal.org/svn/lazarus/trunk/components/synedit"
+msgstr ""
+
+#: taboutform.label4.caption
+msgid "https://www.lazarus-ide.org/"
+msgstr ""
+
+#: taboutform.label5.caption
+msgid ""
+"MIT License\n"
+"Copyright (c) 2021 alpinistbg\n"
+msgstr ""
+
+#: taboutform.label6.caption
+msgid "Minimalistic IDE for coding in Pascal Script"
+msgstr ""
+
+#: taboutform.lblname.caption
+msgid "project1"
+msgstr ""
+
+#: taboutform.lblversion.caption
+msgid "lblVersion"
+msgstr ""
+
+#: tform1.actabout.caption
+msgid "About..."
+msgstr ""
+
+#: tform1.actbreakpoint.caption
+msgid "Breakpoint"
+msgstr ""
+
+#: tform1.actcompile.caption
+msgid "Compile"
+msgstr ""
+
+#: tform1.actcopy.caption
+msgid "&Copy"
+msgstr ""
+
+#: tform1.actcopy.hint
+msgid "Copy"
+msgstr ""
+
+#: tform1.actcut.caption
+msgid "Cu&t"
+msgstr ""
+
+#: tform1.actcut.hint
+msgid "Cut"
+msgstr ""
+
+#: tform1.actdelete.caption
+msgid "&Delete"
+msgstr ""
+
+#: tform1.actdelete.hint
+msgid "Delete"
+msgstr ""
+
+#: tform1.actexit.caption
+msgid "E&xit"
+msgstr ""
+
+#: tform1.actexit.hint
+msgid "Exit"
+msgstr ""
+
+#: tform1.actfind.caption
+msgid "Find"
+msgstr ""
+
+#: tform1.actfindnext.caption
+msgid "Find Next"
+msgstr ""
+
+#: tform1.actfindprev.caption
+msgid "Find Previous"
+msgstr ""
+
+#: tform1.action1.caption
+msgid "Action1"
+msgstr ""
+
+#: tform1.actlayout.caption
+msgid "Change layout"
+msgstr ""
+
+#: tform1.actnew.caption
+msgid "New"
+msgstr ""
+
+#: tform1.actopen.caption
+msgid "&Open ..."
+msgstr ""
+
+#: tform1.actopen.hint
+msgid "Open"
+msgstr ""
+
+#: tform1.actpaste.caption
+msgid "&Paste"
+msgstr ""
+
+#: tform1.actpaste.hint
+msgid "Paste"
+msgstr ""
+
+#: tform1.actpause.caption
+msgid "Pause"
+msgstr ""
+
+#: tform1.actrun.caption
+msgid "Run"
+msgstr ""
+
+#: tform1.actsave.caption
+msgid "&Save"
+msgstr ""
+
+#: tform1.actsaveas.caption
+msgid "Save &As ..."
+msgstr ""
+
+#: tform1.actsaveas.hint
+msgid "Save As"
+msgstr ""
+
+#: tform1.actselectall.caption
+msgid "Select &All"
+msgstr ""
+
+#: tform1.actselectall.hint
+msgid "Select All"
+msgstr ""
+
+#: tform1.actstepinto.caption
+msgid "Step Into"
+msgstr ""
+
+#: tform1.actstepover.caption
+msgid "Step Over"
+msgstr ""
+
+#: tform1.actstop.caption
+msgid "Stop"
+msgstr ""
+
+#: tform1.actundo.caption
+msgid "&Undo"
+msgstr ""
+
+#: tform1.actundo.hint
+msgid "Undo"
+msgstr ""
+
+#: tform1.actwatch.caption
+msgctxt "tform1.actwatch.caption"
+msgid "Watch"
+msgstr ""
+
+#: tform1.caption
+msgid "Form1"
+msgstr ""
+
+#: tform1.edtinput.text
+msgid "edtInput"
+msgstr ""
+
+#: tform1.edtinput.texthint
+msgid "Press Enter when done"
+msgstr ""
+
+#: tform1.lblcaretposition.caption
+msgid "Line: , Col: "
+msgstr ""
+
+#: tform1.lblinput.caption
+msgid "Input"
+msgstr ""
+
+#: tform1.menuitem1.caption
+msgid "&File"
+msgstr ""
+
+#: tform1.menuitem19.caption
+msgid "&Run"
+msgstr ""
+
+#: tform1.menuitem21.caption
+msgid "&Help"
+msgstr ""
+
+#: tform1.menuitem6.caption
+msgid "&Edit"
+msgstr ""
+
+#: unit1.rscancel
+msgid "Cancel"
+msgstr ""
+
+#: unit1.rscompilationfailed
+msgid "Compilation failed."
+msgstr ""
+
+#: unit1.rsdiscardchanges
+msgid "Discard changes"
+msgstr ""
+
+#: unit1.rsins
+msgid "INS"
+msgstr ""
+
+#: unit1.rslinedcolds
+msgid "Line: %d, Col: %d (%s)"
+msgstr ""
+
+#: unit1.rsmessages
+msgid "Messages..."
+msgstr ""
+
+#: unit1.rsnoname
+msgid "Noname"
+msgstr ""
+
+#: unit1.rsnotrunning
+msgid "(not running)"
+msgstr ""
+
+#: unit1.rsovr
+msgid "OVR"
+msgstr ""
+
+#: unit1.rspaused
+msgid " (paused) "
+msgstr ""
+
+#: unit1.rsprogramisrunningdoyouwanttostopit
+msgid "Program is running. Do you want to stop it?"
+msgstr ""
+
+#: unit1.rsrunning
+msgid " (running) "
+msgstr ""
+
+#: unit1.rsruntimeerrorsddbytecodedds
+msgid "[Runtime error] %s(%d:%d), bytecode(%d:%d): %s"
+msgstr ""
+
+#: unit1.rssave
+msgid "Save"
+msgstr ""
+
+#: unit1.rssourcemodified
+msgid "Source modified. Do you want to save changes?"
+msgstr ""
+
+#: unit1.rsstopit
+msgid "Stop it"
+msgstr ""
+
+#: unit1.rssuccessfulycompiled
+msgid "Successfuly compiled."
+msgstr ""
+
+#: unit1.rssuccessfulyexecuted
+msgid "Program exited."
+msgstr ""
+
+#: unit1.rsvariable
+msgid "Variable"
+msgstr ""
+
+#: unit1.rswatch
+msgctxt "unit1.rswatch"
+msgid "Watch"
+msgstr ""
+

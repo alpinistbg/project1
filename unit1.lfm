@@ -2,13 +2,14 @@ object Form1: TForm1
   Left = 252
   Height = 685
   Top = 96
-  Width = 1193
+  Width = 1099
   Caption = 'Form1'
   ClientHeight = 660
-  ClientWidth = 1193
+  ClientWidth = 1099
   DesignTimePPI = 120
   Menu = MainMenu1
   OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poDefault
   LCLVersion = '1.9.0.0'
@@ -16,7 +17,7 @@ object Form1: TForm1
     Left = 0
     Height = 570
     Top = 54
-    Width = 629
+    Width = 651
     Align = alClient
     Font.Height = -18
     Font.Name = 'Consolas'
@@ -537,10 +538,10 @@ object Form1: TForm1
     Left = 0
     Height = 36
     Top = 624
-    Width = 1193
+    Width = 1099
     Align = alBottom
     ClientHeight = 36
-    ClientWidth = 1193
+    ClientWidth = 1099
     ParentFont = False
     TabOrder = 1
     object lblCaretPosition: TLabel
@@ -548,7 +549,7 @@ object Form1: TForm1
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pnlBott
       AnchorSideRight.Side = asrBottom
-      Left = 1112
+      Left = 1018
       Height = 20
       Top = 8
       Width = 70
@@ -559,9 +560,58 @@ object Form1: TForm1
       ParentColor = False
       ParentFont = False
     end
+    object SpeedButton12: TSpeedButton
+      AnchorSideLeft.Control = pnlBott
+      AnchorSideTop.Control = pnlBott
+      AnchorSideTop.Side = asrCenter
+      Left = 11
+      Height = 30
+      Top = 3
+      Width = 30
+      Action = actLayout
+      BorderSpacing.Left = 10
+      Flat = True
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        2000000000000004000064000000640000000000000000000000000000230000
+        0033000000330000003300000033000000330000003300000033000000330000
+        0033000000330000003300000033000000330000003300000023A9988AC0B5A2
+        93FFB4A190FFB4A090FFB4A090FFB4A191FFB4A192FFB4A192FFB4A192FFB4A1
+        92FFB4A192FFB4A192FFB4A192FFB4A292FFB5A394FFA9988BC0B7A394FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5A99EFFB6A394FFB19C
+        8BFFAD9886FFAD9887FFAD9D8FFFBB6D34FFC14D00FFC14C00FFC04B00FFC04B
+        00FFC04B00FFC04B00FFC04B00FFC14C00FFC35000FFC07945FFB4A191FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFC24D00FFF7E9DEFFF4E2D5FFF3E1D3FFF3E1
+        D3FFF3E1D3FFF3E1D3FFF3E1D3FFF4E2D5FFF8EBE1FFC65A0DFFB39F8FFFFFFF
+        FFFFFDFBF9FFFDFCFBFFFFFFFFFFC04B00FFF5E4D8FFEFD7C6FFEFD6C4FFEFD6
+        C4FFEFD6C4FFEFD6C4FFEFD6C4FFEFD7C6FFF6E7DBFFC55A0EFFB39F8EFFFFFF
+        FFFFF8F5F2FFF8F6F4FFFFFFFFFFBF4A00FFF5E4D6FFECD2BFFFECD1BDFFECD1
+        BDFFECD1BDFFECD1BDFFECD1BDFFECD2BFFFF6E6DAFFC55A0EFFB39F8FFFFFFF
+        FFFFF6F1EBFFF6F2EDFFFFFFFFFFC04A00FFF5E4D7FFEBCFBAFFEBCEB9FFEBCE
+        B9FFEBCEB9FFEBCEB9FFEBCEB9FFEBCFBAFFF6E6DAFFC55A0EFFB39F8FFFFFFF
+        FFFFF4EDE6FFF4EEE8FFFFFFFFFFC04A00FFF5E4D7FFE9CDB6FFE9CCB5FFE9CC
+        B5FFE9CCB5FFE9CCB5FFE9CCB5FFE9CDB6FFF6E6DAFFC55A0EFFB39F8FFFFFFF
+        FFFFF0E9E0FFF0EAE2FFFFFFFFFFC04A00FFF6E4D7FFE7C9B2FFE7C9B2FFE7C9
+        B2FFE7C9B2FFE7C9B2FFE7C9B2FFE7C9B2FFF6E7DBFFC55A0EFFB39F8FFFFFFF
+        FFFFEEE4DAFFEEE5DCFFFFFFFFFFC04B00FFF6E4D8FFE4C6AEFFE5C5ADFFE5C6
+        AEFFE5C6AEFFE5C6AEFFE5C5ADFFE4C6AEFFF6E7DBFFC55A0EFFB3A08FFFFFFF
+        FFFFEADFD3FFEAE0D5FFFFFFFFFFC04B00FFF6E6D9FFE1C3AAFFE2C2A9FFE2C2
+        A9FFE2C2A9FFE2C2A9FFE2C2A9FFE1C3AAFFF7E8DDFFC55A0EFFB5A191FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFC24D00FFF7E9DFFFF6E6D9FFF6E5D8FFF6E5
+        D8FFF6E5D8FFF6E5D8FFF6E5D8FFF6E6D9FFF8ECE2FFC65A0DFFB6A394FFB19C
+        8BFFAD9886FFAD9887FFAD9D8FFFBB6D34FFC14D00FFC14C00FFC04B00FFC04B
+        00FFC04B00FFC04B00FFC04B00FFC14C00FFC35000FFC07945FFB7A394FFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5A99EFFB8A696EFB5A2
+        93FFB4A190FFB4A090FFB4A090FFB4A191FFB4A192FFB4A192FFB4A192FFB4A1
+        92FFB4A192FFB4A192FFB4A192FFB4A292FFB5A394FFB8A698EF
+      }
+      ShowCaption = False
+    end
   end
   object splitMain: TSplitter
-    Left = 629
+    Left = 651
     Height = 570
     Top = 54
     Width = 8
@@ -573,11 +623,11 @@ object Form1: TForm1
     Left = 0
     Height = 54
     Top = 0
-    Width = 1193
+    Width = 1099
     Align = alTop
     AutoSize = True
     ClientHeight = 54
-    ClientWidth = 1193
+    ClientWidth = 1099
     ParentFont = False
     TabOrder = 3
     object pnlMenuTools: TPanel
@@ -770,20 +820,20 @@ object Form1: TForm1
       Left = 513
       Height = 52
       Top = 1
-      Width = 679
+      Width = 585
       Align = alRight
       Anchors = [akTop, akLeft, akRight, akBottom]
       BevelOuter = bvNone
       ChildSizing.TopBottomSpacing = 6
       ClientHeight = 52
-      ClientWidth = 679
+      ClientWidth = 585
       ParentFont = False
       TabOrder = 1
       object cbFindWhat: TComboBox
         AnchorSideTop.Control = pnlSearchTools
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = SpeedButton10
-        Left = 406
+        Left = 312
         Height = 28
         Top = 12
         Width = 220
@@ -800,7 +850,7 @@ object Form1: TForm1
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = pnlSearchTools
         AnchorSideRight.Side = asrBottom
-        Left = 632
+        Left = 538
         Height = 40
         Top = 6
         Width = 32
@@ -819,20 +869,20 @@ object Form1: TForm1
     end
   end
   object pnlMessages: TPanel
-    Left = 637
+    Left = 659
     Height = 570
     Top = 54
-    Width = 556
+    Width = 440
     Align = alRight
     ClientHeight = 570
-    ClientWidth = 556
+    ClientWidth = 440
     ParentFont = False
     TabOrder = 4
     object moMessages: TMemo
       Left = 1
       Height = 390
       Top = 1
-      Width = 554
+      Width = 438
       Align = alClient
       BorderStyle = bsNone
       Color = clBlack
@@ -852,7 +902,7 @@ object Form1: TForm1
       Left = 1
       Height = 125
       Top = 399
-      Width = 554
+      Width = 438
       Align = alBottom
       BorderStyle = bsNone
       Color = clCream
@@ -864,7 +914,7 @@ object Form1: TForm1
       Left = 1
       Height = 8
       Top = 391
-      Width = 554
+      Width = 438
       Align = alBottom
       Beveled = True
       ResizeAnchor = akBottom
@@ -873,10 +923,10 @@ object Form1: TForm1
       Left = 1
       Height = 45
       Top = 524
-      Width = 554
+      Width = 438
       Align = alBottom
       ClientHeight = 45
-      ClientWidth = 554
+      ClientWidth = 438
       Color = clMoneyGreen
       ParentColor = False
       ParentFont = False
@@ -892,7 +942,7 @@ object Form1: TForm1
         Left = 60
         Height = 28
         Top = 8
-        Width = 474
+        Width = 358
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Right = 19
         OnEditingDone = edtInputEditingDone

@@ -19,6 +19,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
     lblVersion: TLabel;
     lblName: TLabel;
     Label6: TLabel;
@@ -42,6 +43,10 @@ implementation
 uses
   LCLIntf, Unit1;
 
+resourcestring
+  rsVersionDD = 'Version %d.%d';
+
+
 {$R *.lfm}
 
 { TAboutForm }
@@ -49,7 +54,7 @@ uses
 procedure TAboutForm.FormCreate(Sender: TObject);
 begin
   Image1.Picture.Assign(Application.Icon);
-  lblVersion.Caption := Format('Version %d.%d', [PrgVersion, PrgRevision]);
+  lblVersion.Caption := Format(rsVersionDD, [PrgVersion, PrgRevision]);
 end;
 
 procedure TAboutForm.URLLabelMouseDown(Sender: TObject; Button: TMouseButton;

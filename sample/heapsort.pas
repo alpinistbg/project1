@@ -1,8 +1,5 @@
 program HeapSortDemo;
 
-const
-  RAND_MAX = $7fffffff;
-
 type
   TIntArray = array[4..15] of integer;
 
@@ -10,18 +7,6 @@ var
   data: TIntArray;
   i: integer;
   rand_next: LongWord;
-
-function Random(Mx: Integer): Integer;
-begin
-  rand_next := rand_next * 1103515245 + 12345;
-  Result := rand_next mod LongWord(RAND_MAX + 1);
-  Result := Result mod Mx;
-end;
-
-procedure Randomize(Seed: LongWord);
-begin
-  rand_next := Seed;
-end;
 
 procedure siftDown(var a: TIntArray; start, ende: integer);
   var
@@ -75,7 +60,7 @@ procedure heapSort(var a: TIntArray);
   end;
 
 begin
-  Randomize(7878);
+  Randomize;
   writeln('The data before sorting:');
   for i := low(data) to high(data) do
   begin
