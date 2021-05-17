@@ -648,7 +648,7 @@ var
 begin
   Lang := Application.GetOptionValue('l', 'lang');
   if Lang = '' then
-    Lang := ExtractDelimited(2, ExtractFileName(ParamStr(0)), ['-', '_']);
+    Lang := ExtractDelimited(2, ExtractFileName(ParamStr(0)), ['.','-','_']);
   if Lang <> '' then
     TranslateFromResource(Lang);
   moMessages.Text := rsMessages;
