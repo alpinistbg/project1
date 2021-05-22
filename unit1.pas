@@ -223,6 +223,7 @@ resourcestring
   rsStopIt = 'Stop it';
   rsNotRunning = '(not running)';
   rsMessages = 'Messages...';
+  rsNewFile = 'New file...';
 
 const
   // Identifier characters
@@ -500,6 +501,7 @@ begin
     ClearAllBreakpoints;
     FCompiled := False;
     Editor.Modified := False;
+    moMessages.Text := rsNewFile;
   end;
 end;
 

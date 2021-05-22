@@ -254,6 +254,10 @@ msgstr "Ред: %d, Кол: %d (%s)"
 msgid "Messages..."
 msgstr "Съобщения..."
 
+#: unit1.rsnewfile
+msgid "New file..."
+msgstr "Нов файл..."
+
 #: unit1.rsnoname
 msgid "Noname"
 msgstr "Няма име"

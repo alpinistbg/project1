@@ -244,6 +244,10 @@ msgstr ""
 msgid "Messages..."
 msgstr ""
 
+#: unit1.rsnewfile
+msgid "New file..."
+msgstr ""
+
 #: unit1.rsnoname
 msgid "Noname"
 msgstr ""
